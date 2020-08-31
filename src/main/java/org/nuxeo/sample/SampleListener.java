@@ -2,25 +2,12 @@ package org.nuxeo.sample;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.nuxeo.ecm.automation.AutomationService;
-import org.nuxeo.ecm.automation.InvalidChainException;
-import org.nuxeo.ecm.automation.OperationContext;
-import org.nuxeo.ecm.automation.OperationException;
-import org.nuxeo.ecm.core.api.Blob;
-import org.nuxeo.ecm.core.api.ClientException;
-import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.core.api.NuxeoException;
-import org.nuxeo.ecm.core.api.RecoverableClientException;
-import org.nuxeo.ecm.core.api.blobholder.BlobHolderAdapterService;
+//import org.nuxeo.ecm.core.api.NuxeoException;
 import org.nuxeo.ecm.core.event.Event;
 import org.nuxeo.ecm.core.event.EventContext;
 import org.nuxeo.ecm.core.event.EventListener;
-import org.nuxeo.ecm.core.event.impl.DocumentEventContext;
-import org.nuxeo.ecm.platform.web.common.exceptionhandling.ExceptionHelper;
+import org.nuxeo.ecm.core.work.api.WorkManager;
 import org.nuxeo.runtime.api.Framework;
-import org.nuxeo.runtime.transaction.TransactionHelper;
-
-import org.nuxeo.sample.SampleOperation;
 
 public class SampleListener implements EventListener {
   
@@ -28,33 +15,19 @@ public class SampleListener implements EventListener {
 
     @Override
     public void handleEvent(Event event) {
-        EventContext eventContext = event.getContext();
-        if (!(eventContext instanceof DocumentEventContext)) {
-          return;
+
+        if(event.getName().equalsIgnoreCase("sampleListener")){
+            log.info("Hi from sample listener");
+        } 
+
+        WorkManager workManager = Framework.getService(WorkManager.class);
+
+        if (workManager == null) {
+            throw new RuntimeException("No WorkManager available");
         }
 
-        DocumentEventContext docCtx = (DocumentEventContext) eventContext;
-        DocumentModel doc = docCtx.getSourceDocument();
+        SampleWork work = new SampleWork();
+        workManager.schedule(work);
 
-        log.debug("Hi from sample listener");
-
-        try (OperationContext ctx = new OperationContext(eventContext.getCoreSession())) {           
-            AutomationService os = Framework.getService(AutomationService.class);                    
-
-            if (eventContext instanceof DocumentEventContext) {                                      
-                BlobHolderAdapterService blobService = Framework.getService(BlobHolderAdapterService.class);
-                Blob blob = blobService.getBlobHolderAdapter(doc).getBlob();
-
-                ctx.setInput(blob);
-
-                try {                               
-                    os.run(ctx, SampleOperation.ID);             
-                } catch (InvalidChainException e) { 
-                }                                   
-
-            }                                   
-        } catch (OperationException t) {        
-            log.error(t, t);                    
-        }                 
     }
 }

@@ -1,19 +1,10 @@
 <?xml version="1.0"?>
-<component name="org.nuxeo.sample.listener.samplelistener">
+<component name="org.nuxeo.sample.listener.samplelistener.test">
 
     <extension target="org.nuxeo.ecm.core.event.EventServiceComponent" point="listener">
         <listener name="samplelistener" class="org.nuxeo.sample.SampleListener">
             <event>sampleEvent</event>
         </listener>
-    </extension>
-
-    <extension target="org.nuxeo.ecm.core.scheduler.SchedulerService" point="schedule">
-        <schedule id="sample">
-            <username>moe</username>
-            <eventId>sampleEvent</eventId>
-            <eventCategory>sample</eventCategory>
-            <cronExpression>0 0/1 * * * ?</cronExpression>
-        </schedule>
     </extension>
 
     <extension target="org.nuxeo.ecm.core.work.service" point="queues">

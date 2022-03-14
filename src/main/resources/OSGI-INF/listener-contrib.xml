@@ -7,4 +7,22 @@
     </listener>
   </extension>
 
+  <extension target="org.nuxeo.ecm.core.operation.OperationServiceComponent" point="chains">
+    <chain id="ConvertMainBlobToPDF">
+      <operation id="Context.FetchDocument"/>
+      <operation id="Context.SetInputAsVar">
+        <param type="string" name="name">theDoc</param>
+      </operation>
+      <operation id="Document.GetBlob">
+        <param type="string" name="xpath">file:content</param>
+      </operation>
+      <operation id="Blob.ToPDF"/>
+      <operation id="Blob.AttachOnDocument">
+        <param type="document" name="document">expr:Context["theDoc"]</param>
+        <param type="boolean" name="save">true</param>
+        <param type="string" name="xpath">file:content</param>
+      </operation>
+    </chain>
+  </extension>
+
 </component>

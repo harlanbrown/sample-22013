@@ -6,4 +6,4 @@ Bundle-Version: 1.0.0
 Bundle-Name: sample-listener-and-operation-core
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.nuxeo.sample.sample-listener-and-operation-core;singleton=true
-Nuxeo-Component: OSGI-INF/samplelistener-listener-contrib.xml
+Nuxeo-Component: OSGI-INF/samplelistener-contrib.xml

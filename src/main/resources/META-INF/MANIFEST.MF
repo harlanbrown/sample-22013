@@ -3,7 +3,7 @@ Bundle-ClassPath: .
 Manifest-Version: 1.0
 Bundle-Vendor: org.nuxeo.sample
 Bundle-Version: 1.0.0
-Bundle-Name: sample-listener-and-operation-core
+Bundle-Name: sample-listener-core
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.nuxeo.sample.sample-listener-and-operation-core;singleton=true
-Nuxeo-Component: OSGI-INF/samplelistener-listener-contrib.xml
+Bundle-SymbolicName: org.nuxeo.sample.sample-listener-core;singleton=true
+Nuxeo-Component: OSGI-INF/listener-contrib.xml

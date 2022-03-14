@@ -2,20 +2,25 @@ package org.nuxeo.sample;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.work.AbstractWork;
 import org.nuxeo.runtime.api.Framework;
 
-import org.nuxeo.ecm.core.api.IterableQueryResult;
-
 public class SampleWork extends AbstractWork {
+
+    private static final long serialVersionUID = 1L;
 
     private static final Log log = LogFactory.getLog(SampleWork.class);
 
     public static final String CATEGORY = "sampleWork";
 
-    public SampleWork(String originatingUsername){ 
-        setOriginatingUsername(originatingUsername);
+    private final String xpath;
+
+    public SampleWork(String repositoryName, String docId, String xpath){ 
+        super(repositoryName + ':' + docId + ':' + xpath + ":sampleWork");
+        setDocument(repositoryName, docId);
+        this.xpath = xpath;
     }
 
     @Override
@@ -30,16 +35,15 @@ public class SampleWork extends AbstractWork {
 
     @Override
     public void work() {
-        log.error(originatingUsername);
 
-        openUserSession();
-                
-        IterableQueryResult it = session.queryAndFetch("select * from Document", org.nuxeo.ecm.core.query.sql.NXQL.NXQL); 
-        log.error(it.size());
-        it.close();
-
+        openSystemSession();
+        if (!session.exists(new IdRef(docId))){
+            log.debug("doc ref no good"); 
+        } else {
+          DocumentModel theDoc = session.getDocument(new IdRef(docId));
+          log.debug(theDoc);           
+        }
 
     }
 
 }
-

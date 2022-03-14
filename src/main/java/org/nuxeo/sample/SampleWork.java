@@ -38,10 +38,10 @@ public class SampleWork extends AbstractWork {
 
         openSystemSession();
         if (!session.exists(new IdRef(docId))){
-            log.debug("doc ref no good"); 
+            log.error("doc ref no good"); 
         } else {
+          log.debug("HI FROM WORKER"); 
           DocumentModel theDoc = session.getDocument(new IdRef(docId));
-          log.debug(theDoc);           
         }
 
     }

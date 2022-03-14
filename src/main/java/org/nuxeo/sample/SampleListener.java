@@ -20,14 +20,13 @@ public class SampleListener implements EventListener {
         EventContext ctx = event.getContext();
         DocumentEventContext docCtx = (DocumentEventContext) ctx;
         DocumentModel doc = docCtx.getSourceDocument();
-        log.debug(doc);
 
-        if (DocumentEventTypes.DOCUMENT_CREATED.equals(event.getName())){
+        if (DocumentEventTypes.DOCUMENT_UPDATED.equals(event.getName())){
             WorkManager workManager = Framework.getService(WorkManager.class);
             if (workManager == null) {
                 throw new RuntimeException("No WorkManager available");
             }
-            SampleWork work = new SampleWork(doc.getRepositoryName(), doc.getRef().toString(), "file:content");
+            SampleWork work = new SampleWork(doc.getRepositoryName(), doc.getId(), "file:content");
             workManager.schedule(work);
         }
     }

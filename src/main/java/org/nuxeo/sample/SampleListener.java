@@ -21,7 +21,8 @@ public class SampleListener implements EventListener {
         DocumentEventContext docCtx = (DocumentEventContext) ctx;
         DocumentModel doc = docCtx.getSourceDocument();
 
-        if (DocumentEventTypes.DOCUMENT_UPDATED.equals(event.getName())){
+        if (DocumentEventTypes.DOCUMENT_CREATED.equals(event.getName()) ||
+            DocumentEventTypes.DOCUMENT_UPDATED.equals(event.getName())){
             WorkManager workManager = Framework.getService(WorkManager.class);
             if (workManager == null) {
                 throw new RuntimeException("No WorkManager available");

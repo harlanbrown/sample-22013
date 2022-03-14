@@ -3,6 +3,7 @@
 
   <extension target="org.nuxeo.ecm.core.event.EventServiceComponent" point="listener">
     <listener name="samplelistener" class="org.nuxeo.sample.SampleListener">
+      <event>documentCreated</event>
       <event>documentModified</event>
     </listener>
   </extension>

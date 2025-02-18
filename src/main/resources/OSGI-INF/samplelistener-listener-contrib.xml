@@ -11,6 +11,7 @@
         <schedule id="sample">
             <eventId>sampleListener</eventId>
             <eventCategory>sample</eventCategory>
+<!-- run every minute -->
             <cronExpression>0 0/1 * * * ?</cronExpression>
         </schedule>
     </extension>

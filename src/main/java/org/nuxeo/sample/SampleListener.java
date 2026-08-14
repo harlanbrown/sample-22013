@@ -27,6 +27,7 @@ public class SampleListener implements EventListener {
             if (workManager == null) {
                 throw new RuntimeException("No WorkManager available");
             }
+            log.info("Hi from SampleListener");
             SampleWork work = new SampleWork(doc.getRepositoryName(), doc.getId(), "file:content");
             workManager.schedule(work);
         }

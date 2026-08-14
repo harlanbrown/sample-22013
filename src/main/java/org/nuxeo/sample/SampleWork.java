@@ -49,6 +49,7 @@ public class SampleWork extends AbstractWork {
     public void work() {
 
         openSystemSession();
+        log.info("Hi from SampleWork");
 
         if (!session.exists(new IdRef(docId))){
 
